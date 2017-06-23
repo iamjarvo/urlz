@@ -5,7 +5,7 @@ defmodule Urlz.Shortener do
     Agent.start_link(fn -> %{} end)
   end
   
-  @spec shorten(any, String.t) :: String.t
+  @spec shorten(pid, String.t) :: String.t
   def shorten(db, url) do
     shortened_url = 
       url
@@ -17,7 +17,7 @@ defmodule Urlz.Shortener do
     shortened_url
   end
 
-  @spec expand(any, String.t) :: String.t
+  @spec expand(pid, String.t) :: String.t
   def expand(db, shortened_url) do
     Agent.get(db, fn(urls) -> Map.get(urls, shortened_url) end)
   end
