@@ -1,18 +1,7 @@
 defmodule Urlz do
-  @moduledoc """
-  Documentation for Urlz.
-  """
+  use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Urlz.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    Urlz.Supervisor.start_link
   end
 end
