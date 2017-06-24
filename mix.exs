@@ -32,6 +32,7 @@ defmodule Urlz.Mixfile do
     [{:cowboy, "~> 1.0.0"},
      {:plug, "~> 1.0"},
      {:poolboy, "~> 1.5.1"},
-     {:dialyxir, "~> 0.5", only: [:dev], runtime: false}]
+     {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+     {:distillery, "~> 1.0"}]
   end
 end
