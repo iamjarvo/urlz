@@ -15,6 +15,8 @@ defmodule Urlz.Supervisor do
 
   def init(:ok) do
     port = Application.get_env(:urlz, :port, 4001)
+    IO.puts("PORTSSSSSSSSSSSS")
+    IO.puts(port)
     children = [
       :poolboy.child_spec(:worker, poolboy_config(), []),
       supervisor(Urlz.CacheSupervisor, []),
