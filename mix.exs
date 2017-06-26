@@ -33,6 +33,8 @@ defmodule Urlz.Mixfile do
      {:plug, "~> 1.0"},
      {:poolboy, "~> 1.5.1"},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
-     {:distillery, "~> 1.0"}]
+     {:distillery, "~> 1.0"},
+     {:dbg, github: "fishcakez/dbg"},
+     {:poison, "~> 3.1"}]
   end
 end

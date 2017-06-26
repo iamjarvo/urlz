@@ -7,7 +7,7 @@ defmodule Urlz.Cache do
 
   def init(args) do
     [{:ets_table_name, ets_table_name}] = args
-    :ets.new(ets_table_name, [:named_table, :set, :private])
+    :ets.new(ets_table_name, [:named_table, :set, :private, read_concurrency: true])
     {:ok, %{ets_table_name: ets_table_name}}
   end 
 
@@ -16,12 +16,17 @@ defmodule Urlz.Cache do
   end
 
   def get(slug) do
-    [{slug, destination}] = GenServer.call(__MODULE__, {:get, slug})
-    destination
+    case GenServer.call(__MODULE__, {:get, slug}) do
+      [{slug, destination}] ->
+        destination
+      _ ->
+        []
+    end
   end
 
   def handle_call({:get, slug}, _from, state) do
     %{ets_table_name: ets_table_name} = state
+
     result = :ets.lookup(ets_table_name, slug)
     {:reply, result, state}
   end
