@@ -8,6 +8,8 @@ use Mix.Config
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
 
+config :urlz, port: String.to_integer(System.get_env("PORT") || "4001")
+
 # You can configure for your application as:
 #
 #     config :urlz, key: :value
