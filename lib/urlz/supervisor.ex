@@ -14,10 +14,11 @@ defmodule Urlz.Supervisor do
 
 
   def init(:ok) do
+    port = Application.get_env(:urlz, :port, 4001)
     children = [
       :poolboy.child_spec(:worker, poolboy_config(), []),
       supervisor(Urlz.CacheSupervisor, []),
-      Plug.Adapters.Cowboy.child_spec(:http, Urlz.Router, [], [port: Application.get_env(:urlz, :port, 4001), acceptors: 1000])
+      Plug.Adapters.Cowboy.child_spec(:http, Urlz.Router, [], [port: port, acceptors: 1000])
     ]
 
     supervise(children, strategy: :one_for_one)
