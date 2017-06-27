@@ -1,22 +1,25 @@
 defmodule Urlz.ShortenerTest do
   use ExUnit.Case, async: true
 
-  test "shortens a url" do
-    {:ok, db}= Urlz.Shortener.start_link(:ok)
+  setup do
+    {:ok, shortner} = Urlz.Shortener.start_link(:ok)
+    {:ok, shortner: shortner}
+  end
+
+  test "shortens a url", %{shortner: shortner} do
     url =  "http://google.com/123"
-    result = Urlz.Shortener.shorten(url)
+    result = Urlz.Shortener.shorten(shortner, url)
 
     assert result
     assert result != url
     assert String.length(result) == 4
   end
 
-  test "expand a shortened url" do
-    {:ok, db }= Urlz.Shortener.start_link(:ok)
+  test "expand a shortened url", %{shortner: shortner} do
     url =  "http://google.com/123"
-    shortened_url = Urlz.Shortener.shorten(url)
+    shortened_url = Urlz.Shortener.shorten(shortner, url)
 
-    result = Urlz.Shortener.expand(shortened_url)
-    assert result == url
+    result = Urlz.Shortener.expand(shortner, shortened_url)
+    assert result.destination == url
   end
 end

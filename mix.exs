@@ -35,6 +35,8 @@ defmodule Urlz.Mixfile do
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:distillery, "~> 1.0"},
      {:dbg, github: "fishcakez/dbg"},
+     {:mix_docker, "~> 0.5.0"},
+     {:eqc_ex, "~> 1.4"},
      {:poison, "~> 3.1"}]
   end
 end

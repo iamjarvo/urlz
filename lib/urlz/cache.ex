@@ -15,12 +15,13 @@ defmodule Urlz.Cache do
     GenServer.call(__MODULE__, {:set, slug, value})
   end
 
+  @spec get(String.t) :: %Urlz.Url{destination: String.t, slug: String.t} | %Urlz.Url{destination: nil, slug: nil}
   def get(slug) do
     case GenServer.call(__MODULE__, {:get, slug}) do
       [{slug, destination}] ->
-        destination
+        %Urlz.Url{destination: destination, slug: slug}
       _ ->
-        []
+        %Urlz.Url{}
     end
   end
 
@@ -34,6 +35,6 @@ defmodule Urlz.Cache do
   def handle_call({:set, slug, value}, _from, state) do
     %{ets_table_name: ets_table_name} = state
     true = :ets.insert(ets_table_name, {slug, value})
-    {:reply, value, state}
+    {:reply, slug, state}
   end
 end
